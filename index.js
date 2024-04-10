@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   res.send("Hello, Express!");
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 4560;
 
 server.listen(PORT, () => {
   console.log(`HTTP server and WebSocket server are running on port ${PORT}`);
