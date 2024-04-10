@@ -1,32 +1,21 @@
-const express = require('express');
-const https = require('https');
 const WebSocket = require('ws');
 
-const app = express();
-const server = https.createServer(app);
-const wss = new WebSocket.Server({ server });
+// Create a WebSocket server
+const wss = new WebSocket.Server({ port: 8080 });
 
-// Express routes
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// Event handler for when a client connects
+wss.on('connection', function connection(ws) {
+  console.log('Client connected');
 
-// WebSocket server
-wss.on('connection', (ws) => {
-  console.log('WebSocket client connected');
-
-  ws.on('message', (message) => {
-    console.log(`Received message: ${message}`);
-    // Handle incoming messages from the WebSocket client
+  // Event handler for when a message is received from a client
+  ws.on('message', function incoming(message) {
+    console.log('Received: %s', message);
   });
 
-  ws.on('close', () => {
-    console.log('WebSocket client disconnected');
+  // Event handler for when a client disconnects
+  ws.on('close', function close() {
+    console.log('Client disconnected');
   });
 });
 
-const PORT = 2323;
-
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+console.log('WebSocket server is running on port 8080');
